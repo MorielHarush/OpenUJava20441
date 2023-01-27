@@ -1,0 +1,82 @@
+package Year2012;
+
+public class February2012a82 {
+	
+	public static void main(String[] args)
+	{
+//		int [] s = {4,5};
+//		System.out.println(isSumOf(s, 13));
+//		int ss [] = {1,2,3};
+//		System.out.println(isSumOf(ss, 7));
+		int [] count = {-5,-5,1,1,1,1,1,1,1,1,2,2,2,2,2,3,3,3,3,67,67,99};
+		System.out.println(count(count,-5));
+		System.out.println(count(count,2));
+		System.out.println(count(count,8));
+		System.out.println(count(count,1));
+		System.out.println(count(count,3));
+		System.out.println(count(count,67));
+		System.out.println(count(count,99));
+		System.out.println(count(count,12));
+	}
+
+	
+	public static boolean isSumOf(int[] s, int n) {
+	    return isSumOf(s, n, 0, n,"");
+	}
+	
+	private static boolean isSumOf(int[] s, int n, int i, int sum,String str) {
+	    if (sum == 0) {
+	    	System.out.println(str);
+	        return true;
+	    }
+	    if (i >= s.length || sum < 0) {
+	        return false;
+	    }
+	    boolean option1 = isSumOf(s, n, i+1, sum,str);
+	    boolean option2 = isSumOf(s, n, i, sum - s[i],str +s[i] +" ");
+	    return option1 || option2;
+		}
+
+	/**
+	 * לולאה ראשונה בודקת האם מספר כלשהו במערך שווה לאיקס. לאחר מכן במידה ונמצא את איקס נשבור את הלולאה 
+	 * נעבור לאיף ראשון שיבדוק האם הגענו לסוף המערך. במידה וכן נחזיר שיש רק מספר אחד כזה. 
+	 * נבצע שוב בדיקה לבדוק מי זה מיד , ולאחר מכן נרוץ בלולאה נוספת ונבדוק האם מצד ימין או צצד שמאל האם קיים אותו איקס שוב ושוב 
+	 * במידה וכן, נסכום אותם ונחזיר אותם בסוף. 
+	 * במידה ולא נשבור את הלולאה ונגיע לאיף האחרון שיבדוק האם אין מכל צדדיו שוב איקס , במידהו אין תחזיר -1 כי אין את איקס בכלל, אחרת תחזיר את כמות האיקס שסכמנו.
+	 * @param a
+	 * @param x
+	 * @return
+	 */
+	public static int count (int[] a, int x) {
+		int low = 0;
+		int high = a.length-1;
+		int mid;
+		int i = 1; // go right
+		int j = 1; // go left
+		while(low <= high) {
+			mid = (low + high) /2;
+			if(a[mid] == x)
+				break;
+			if (a[mid] < x)
+				low = mid+1;
+			else 
+				high = mid-1;
+			}
+		if(low == high)  // if we reached the last index in the array.
+			return 1;
+		mid = (low+high) /2;
+		while(a[mid+i] == x || a[mid-j] == x && mid+1 >= j) {
+			if(a[mid-j] == x && j < mid+1)
+				j++;
+			if(a[mid+i] == x)
+				i++;
+			else break;
+		}
+		if (low > high || low == high && a[high] != x && a[low] != x && a[high-low] != x) // if the number didnt found return -1
+		    return -1;
+		return (i + j)-1;
+		
+	} // public close 
+}
+
+
