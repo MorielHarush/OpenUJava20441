@@ -1,0 +1,97 @@
+package Year2016;
+
+public class Feburary2016a83 {
+	
+	public static void main(String[] args)
+	{
+		int [][] a = {
+				{-2, -3, 3},
+				{-5, -10, 1},
+			    {10, 30, -5}
+					};
+			 
+		System.out.println(minPoints(a));
+		
+		int [] b = {1,2,5,3,6,10,9 };
+		int [] c = {1}; // alone - false
+		System.out.println(findX(b, 9)); // true
+		System.out.println(findX(b, 19)); // true
+		System.out.println(findX(b, 16)); // true
+		System.out.println(findX(b, 8)); // true
+		System.out.println(findX(b, 7)); // true
+		System.out.println(findX(b, 3)); // true
+		System.out.println(findX(b, 10)); // false
+		System.out.println(findX(b, 20)); // false
+		System.out.println(findX(b, 17)); // false
+		System.out.println(findX(b, 6)); // false
+		System.out.println(findX(b, 2)); // false
+	}
+/*
+ *
+ * RECURSION 
+ */
+	/**
+	 * The method returns the minimum number that should be in the 0,0 position in the array in order to end the route with a positive number
+	 * @param m - the array
+	 * @return returns the minimum number that should be in the 0,0 position in the array in order to end the route with a positive number
+	 */
+	public static int minPoints(int [][] m)
+	{		
+		return minPoints(m,0,0);
+	}
+	
+	private static int minPoints(int [][] m, int i, int j)
+	{
+		if (i == m.length || j == m[0].length) // out of the road
+		{
+			return Integer.MAX_VALUE;
+		}
+		
+		if (i == m.length-1 && j == m[0].length-1) // finished the road
+		{
+			 if(m[i][j] <= 0)
+				 return -m[i][j] + 1; // stay positive and add 1.
+			 else
+				 return m[i][j];
+		}
+
+		int right = minPoints(m,i,j+1); // go right
+		int down = minPoints(m,i+1,j); // go down 
+		
+		int options = Math.min(right,down) -m[i][j]; // get the minimum
+		
+		if(options <= 0)
+			return 1;
+		else 
+			return options;
+	}
+
+	
+	/**
+	 * @param a - the array
+	 * @param x - The number we will need to reach through a sum of 2 adjacent index's in the array
+	 * Example -  array = 1,2,5,3,6,10,9 , x = 9 so it will be x=3+6=9 | index places = index 4 + index 5. 
+	 * @return
+	 */
+	public static boolean findX (int [] a , int x)
+	{
+		int mid = 0;
+		int low = 0;
+		int high = a.length-1;
+		
+		if (a.length <= 1)
+			return false;
+		while (low < high)
+		{
+			mid = (low + high)/2; // get the mid 
+			if (a[mid] + a[mid+1] == x) // if mid + next index is equals to x return true
+				return true;
+			else if (a[mid] + a[mid+1] < x)	 // if mid + next index smaller than x , low = mid+1 
+				low = mid+1;
+			else high = mid;
+		}
+		return false;
+	}
+
+
+}
