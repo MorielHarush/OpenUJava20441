@@ -1,0 +1,44 @@
+package Year2018;
+
+public class Feburary2018a85 {
+	
+	public static void main(String[] args)
+	{
+
+		int [][] aaa = {
+				{3, 13, 15, 28, 30},
+				{55, 54, 53, 27, 26},
+			    {54, 12, 52, 51, 50},
+			    {50, 10, 8, 53, 11}
+						};
+			 
+		System.out.println(longestSlope(aaa,1));
+	}
+
+	public static int longestSlope (int [][] mat, int num)
+	{
+		return longestSlope (mat,1,0,0,0);
+	}
+	
+	private static int longestSlope (int [][] mat,int num, int i, int j, int sum)
+	{
+		if (i < 0 ||  j < 0 || i >= mat.length || j >= mat[0].length || mat[i][j] < 0) // exception matrix 
+			return 0;
+		
+		int k = mat [i][j]; // who is num ? 
+		mat[i][j] = -k; // so we wont get to this place again
+		
+		int upOrDown = 0;
+		int rightOrLeft = 0;
+		
+		if (k - (mat [i-1][j]) == num || (k - (mat [i+1][j]) == num)) // go up or down
+			upOrDown = longestSlope(mat,num,i+1,j,sum+1) + longestSlope(mat,num,i-1,j,sum+1);
+		
+		if (k - (mat [i][j+1]) == num || (k - (mat [i][j-1]) == num)) // go right or left 
+			rightOrLeft = longestSlope(mat,num,i,j+1,sum+1) + longestSlope(mat,num,i,j-1,sum+1);
+		
+		
+		mat[i][j] = k;
+		return Math.max(upOrDown, rightOrLeft);
+	}
+}
