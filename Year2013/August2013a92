@@ -1,0 +1,80 @@
+package Year2013;
+
+import java.util.Arrays;
+
+public class August2013a92 {
+	
+	public static void main(String[] args) {
+		int [] arr = {1,1,1,1};
+		int [] arr3 = {2,2,2,2,2};
+		int arr2 [] = {4,5,6,5,4,3}; //i = 1 , j = 2 
+		int arr4 [] = {4,6,7,6,4,3};
+		int arr5 [] = {4,6,7,6,7,4,3};
+//		System.out.println(longestFlatSequence(arr));
+//		System.out.println(longestFlatSequence(arr3));
+//		System.out.println(longestFlatSequence(arr2));
+//		System.out.println(longestFlatSequence(arr4));
+//		System.out.println(longestFlatSequence(arr5));
+		int[] a = {35,17,13,252,4,128,7,3,81};
+		int[] expected  = {81,252,13,3,4,35,17,7,128};
+		sortMod(a,10);
+		System.out.println("expected: " + Arrays.toString(expected));
+		System.out.println("received: " + Arrays.toString(a));
+	}
+	public static int longestFlatSequence(int[] arr)
+	{
+		return longestFlatSequence(arr, 0, 0); // Main method which uses the private method longestFlatSequence with loading.
+	}
+
+	private static int longestFlatSequence(int[] arr, int i, int max)
+	{
+		if (i >= arr.length) // if the Array is 0 Characters. so it will stop immediately. Handling an abnormal error.
+		{
+			return max;
+		}
+		int length = lengthFlat(arr, i); // Using the Helping Method.
+		max = Math.max(max, length); // Perform placement by comparing the max parameter to the length parameter to find which one is bigger.
+		return longestFlatSequence(arr, i + 1, max);
+	}
+
+	public static int lengthFlat(int[] arr, int i)
+	{
+		return lengthFlat(arr, i, arr[i], arr[i], 0); // Helping method which uses the lengthFlat method with loading.
+	}
+
+	private static int lengthFlat(int[] arr, int i, int arrayNum, int arrayNum2, int lengthOfArray)
+	{
+		if (i >= arr.length) //if the Array is 0 Characters. so it will stop immediately. Handling an abnormal error.
+		{
+			return lengthOfArray;
+		}
+		if (arr[i] == arrayNum || arr[i] == arrayNum2) // Checks if the index 0 position is different, and then starts running recursively on the whole array.
+		{
+			return lengthFlat(arr, i+1, arrayNum, arrayNum2, lengthOfArray+1); 
+		}
+		if (arrayNum != arrayNum2) // Checks if the arrayNum is not equals to arrayNum2
+		{
+			return lengthOfArray;
+		}
+		if (Math.abs(arr[i] - arrayNum2) == 1) // Checks if the index in the array is exactly 1 higher or lower.  
+		{
+			return lengthFlat(arr, i+1, arrayNum, arr[i], lengthOfArray+1); // if true , index+1 , and set arrayNum2 as arr[index].
+		}
+		return lengthOfArray;
+	}
+	
+	
+	
+	public static void sortMod(int a[],int k) {
+		int jj = 0;
+		for(int i=0; i<k; i++)
+			for(int j=jj; j<a.length; j++)
+				if(a[j] % k == i) {
+					int temp= a[jj];
+					a[jj] = a[j];
+					a[j] = temp;
+					jj++;
+				}
+	}
+}
+
