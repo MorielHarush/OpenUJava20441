@@ -1,0 +1,44 @@
+package Year2013;
+
+public class March2013a33 {
+	
+	public static void main(String[] args) {
+		int a [] = {2,3,57};
+		int aa [] = {5,39,67};
+		int aaa [] = {2,3,573,4,34,35};
+		int aaaa [] = {2,3,573,4,324,35};
+		int aaaaa [] = {2,3};
+		int z [] = {2,3,573,4,324,35};
+		int b [] = {1,0,2};
+		int nulll [] = {};
+		System.out.println(match(a, b));
+		System.out.println(match(aa, b));
+		System.out.println(match(aaa, b));
+		System.out.println(match(aaaa, nulll));
+		System.out.println(match(aaaaa, b));
+		System.out.println(match(z, b));
+	}
+    public static boolean match(int[] a, int[] pattern) {
+        return match(a, pattern, 0, 0, 0);
+    }
+
+    private static boolean match(int[] a, int[] pattern, int beginning, int i, int counter) {
+        if (pattern.length == 0 || counter == pattern.length)
+            return true;
+
+        if (beginning + i > a.length - 1)
+            return false;
+
+        if (a[beginning + i] > 9 && a[beginning + i] < 100 && pattern[i] == 2 
+        		|| a[beginning + i] < 10 && pattern[i] == 1
+                || a[beginning + i] < 100 && pattern[i] == 0)
+            return match(a, pattern, beginning, i + 1, counter + 1);
+
+        return match(a, pattern, beginning + 1, 0, 0);
+    }
+    
+    
+  //  public int what (char start, char end) {
+
+    //} // TO DO !!! 
+}
