@@ -1,0 +1,61 @@
+package Year2017;
+
+public class March2017a86 {
+	
+	public static void main(String[] args)
+	{
+//		String str1 = "moriel";
+//		String str2 = "morie";
+//		System.out.println(edit(str1, str2));
+		
+		int [] arr = { -2 , 0 , 1 , 3 };
+		System.out.println(countTriplets(arr, 2));
+//		int [] arr1 = { 1, 3, 4, 5, 7 };
+//		System.out.println(countTriplets(arr1, 12));
+	}
+	
+	
+	public static int edit (String str1, String str2)
+	{
+		return edit(str1,str2,0);
+	}
+	
+	private static int edit (String str1, String str2, int count)
+	{
+		if(str1 == null || str2 == null)
+			return 0;
+		if (str1.length() == 0 & str2.length() == 0) // two empty strings 
+			return count;
+		if (str1.length() == 0) // if str1 is empty first , return the str2 length left 
+			return (count + str2.length());
+		if (str2.length() == 0) // if str2 is empty first , return the str1 length left 
+			return (count + str1.length()); 
+		if (str1.charAt(0) == str2.charAt(0)) // main Recursion which is cutting the char's when they are the same .
+			return edit(str1.substring(1),str2.substring(1),count);
+		return Math.min(edit(str1.substring(1),str2,count+1),edit(str1,str2.substring(1),count+1));
+	}
+	
+
+    public static int countTriplets(int[] arr, int num) {
+        // the array is sorted in ascending order !
+        int arrLength = arr.length;
+        int counter = 0;
+        for(int i = 0; i < arrLength - 2 ; ++i) {
+
+            int leftIndex = i + 1;
+            int rightIndex = arrLength - 1;
+
+            while(leftIndex < rightIndex) {
+                // if the interval meets the requirement , add all triplet solutions in that interval and increase the left pointer and repeat the proccess
+                if(arr[i] + arr[leftIndex] + arr[rightIndex] < num) {
+                    counter += rightIndex - leftIndex;
+                    leftIndex++;
+                }else   
+                    rightIndex--; // in case the sum is not less than num , we decrease the right pointer therefore the value in that index will be lower 
+            }
+        }
+        return counter;
+	
+	
+}
+}
