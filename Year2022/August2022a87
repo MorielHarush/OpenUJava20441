@@ -1,0 +1,81 @@
+package Year2022;
+
+public class August2022a87 {
+
+	public static void main(String [] args) {
+		System.out.println(findMissingIndex(new int [] {22,24,26,32,34,36,38,40}));
+		System.out.println(findMissingIndex(new int [] {22,26,28}));
+		System.out.println(findMissingIndex(new int [] {2,4,6,8,10}));
+	}
+	/**
+	 * Recursion , A 
+	 * @param mat
+	 * @param x
+	 * @param size
+	 * @return
+	 */
+	public static boolean isIdentity(int [][] mat, int x, int size)
+	{
+		return isIdentity(mat,x,size,x,x);
+	}
+	
+	private static boolean isIdentity(int [][] mat, int x, int size,int i,int j)
+	{
+		if (i==j) 
+		{
+			if(mat[i][j] == 1)
+			{
+				return isIdentity(mat,x,size,i+1,j) && isIdentity(mat,x,size,i,j+1);
+			}
+			else {
+				return false;
+			}
+		}
+		if(i == x+size || j == x+size) {
+			return true;
+		}
+		if (mat[i][j] == 0) {
+			return isIdentity(mat,x,size,i+1,j) && isIdentity(mat,x,size,i,j+1);
+		} else { 
+			return false;
+		}
+	}
+	
+	/**
+	 * REcursion B 
+	 * @param mat
+	 * @return
+	 */
+	public static int maxMatrix(int [][] mat) {
+		return maxMatrix(mat, 0, mat.length);
+	}
+	private static int maxMatrix(int [][] mat, int start, int size) {
+		if (size <= 0) {
+			return 0;
+		}
+		if (isIdentity(mat,start,size)) {
+			return size;
+		}
+		return maxMatrix(mat, start+1, size-2);
+	}
+	
+	
+	public static int findMissingIndex(int [] a) {
+		int diff = Math.min(a[1] - a[0], a[2] - a[1]);
+		int left = 0;
+		int right = a.length-1;
+		int mid;
+		while (left < right-1) {
+			mid = (left+right) /2;
+			if(a[left] + diff *(mid-left) != a[mid]) {
+				right = mid;
+			}else if (a[mid] + diff*(right-mid) != a[right]) {
+				left = mid;
+			} else {
+				return a.length;
+			}
+		}
+		return right;
+	}
+	
+}
