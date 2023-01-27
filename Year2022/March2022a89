@@ -1,0 +1,84 @@
+package Year2022;
+
+public class March2022a89 {
+	public static void main(String[] args) {
+//		System.out.println(isJump("adbrcfa","abc",2));
+//		System.out.println(isJump("cbdadbrcfa","abc",2));
+//		System.out.println(isJump("adcfbaagcxabcd","abc",4));
+//		System.out.println(isJump("adcfbaagcxabcd","abc",1));
+//		System.out.println(strStep("adbrcfa","abc"));
+//		System.out.println(strStep("cbdadbrcfa","abc"));
+		System.out.println(strStep("adcfbaagcxabcd","abc"));
+//		System.out.println(strStep("abcfbaagcxabcd","abc"));
+//		int [] a = {-1,1,-1,-5,2,2};
+//		int [] aa = {3,3,2,-7,2,1,1,-2,-2};
+//		int [] b = {1,2,3,4,5,4};
+//		int [] bb = {1,-2,3,-4,-5,4,2,-4,6,-2};
+// 		System.out.println(longestSubArray(a));
+//// 		System.out.println(longestSubArray(aa));
+//// 		System.out.println(longestSubArray(b));
+//// 		System.out.println(longestSubArray(bb));
+	}
+
+	public static boolean isJump (String str1, String str2, int step) {
+		if(str1.length() < str2.length())
+			return false;
+		return isJump(str1,str2,step,0);
+	}
+	private static boolean isJump (String str1, String str2, int step,int stepsLeft) {
+		if(str2.length() == 0)
+			return true;
+		if(str1.length() == 0) 
+			return false;
+		if(stepsLeft == 0 && str1.charAt(0) != str2.charAt(0))
+			return false;
+		if(stepsLeft == 0 && str1.charAt(0) == str2.charAt(0))
+			return isJump(str1.substring(1),str2.substring(1),step,step-1);
+		return isJump(str1.substring(1),str2,step,stepsLeft-1);
+	}
+	
+	public static int strStep(String str1,String str2)
+	{
+		return strStep(str1,str2,1);
+	}
+	private static int strStep(String str1,String str2,int step) {
+		if(step > str1.length() || str1.charAt(0) != str2.charAt(0))
+			return -1;
+		if (isJump(str1,str2,step))
+			return step;
+		return strStep(str1,str2,step+1);
+	}
+	
+	public static int longestSubArray(int[] a) {
+		int start = 0;
+		int end = 0;
+		int startMax = 0;
+		int endMax = 0;
+		int arrMax = Integer.MIN_VALUE;
+		boolean positive;
+		if(a[0] > 0)
+			 positive=true;
+		else
+			positive=false;
+		while(end < a.length-1) {
+			if(a[end] > 0 && positive || a[end] < 0 && !positive) { // if number is positive or negative just move forward
+				System.out.println(a[end]);
+				end++; 
+			}else{
+				if(end-start > arrMax) {
+					arrMax = end-start;
+					startMax = start;
+					endMax = end;
+					}
+				start = end;
+				}
+			positive =! positive;
+		}
+		if (end-start > arrMax) {
+			System.out.println("Starting Index = " + start + " Ending Index = " + (end-1));
+			return end-start;
+		}
+		System.out.println("Starting Index = " + startMax + " Ending Index = " + (endMax-1));
+		return arrMax;
+	}
+}
