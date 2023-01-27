@@ -1,0 +1,70 @@
+package Year2021;
+
+public class August2021 {
+
+	public static void main(String[] args)
+	{
+		int[] arr ={ 1, 3, 6, 2 };
+		System.out.println(printExpr(arr, 9));
+		int [] a = { 1 , 1 , 0 , 1 ,1 ,0 , 1 , 1 , 1 , 1 , 0 , 0 };
+//		System.out.println(longestSequence(a, 0));
+//		System.out.println(longestSequence(a, 1));
+//		System.out.println(longestSequence(a, 2));
+//		System.out.println(longestSequence(a, 3));
+//		System.out.println(longestSequence(a, 4));
+
+
+	}
+
+	
+	/**
+	 * Linear Search - O(n)
+	 * Moed 2022b - 477 , 92 Complexity
+	 * @param a - the Array.
+	 * @param k - the amount of 0's in the array. 
+	 * @return the longest array which includes 1's between the 0's.
+	 * 
+	 */
+	public static int longestSequence(int[] a , int k) {
+		int start = 0;
+		int max = 0;
+		int sum = k;
+		while (start + max < a.length)
+		{
+			sum += (a[max + start] -1);
+			System.out.println(a[max + start] -1);
+			if (sum >= 0)
+				max++;
+			else
+			{
+				sum -= (a[start] -1);
+					start++;
+			}
+		}
+		return max;
+	  } // main close 
+
+
+	   
+    
+    
+	public static int printExpr(int [] arr,int num) {
+		return printExpr(arr,0,arr.length-1,num,0,"");
+	}
+	
+	private static int printExpr(int [] arr,int i,int max,int num,int sum,String test) {
+		if (num == sum) {
+			System.out.println(test);
+			return 1;
+		}
+		if (i > max)
+			return 0;
+		int r1 = printExpr(arr,i+1,max,num,sum,test);
+		int r2 = printExpr(arr,i+1,max,num,sum+arr[i],test+ "+" + arr[i] + " ");
+		int r3 = printExpr(arr,i+1,max,num,sum-arr[i],test+ "-" + arr[i] + " ");
+		return r1+r2+r3; 
+	}
+}
+	
+
+
