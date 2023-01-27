@@ -1,0 +1,89 @@
+package Year2017;
+
+public class August2017a93 {
+	
+	public static void main(String[] args)
+	{
+		int aa [] = {3,4,5,12,19,20,21,100,101,102,103,104};
+
+	}
+
+    public static int cntTrueReg(boolean[][] mat) {
+        return cntTrueReg(mat, 0, 0, mat.length); // square matrix so size of nxn
+    }
+
+    private static int cntTrueReg(boolean[][] mat, int i, int j, int maxIndex) {
+        // checking bounds and iterating through the matrix
+        if(j >= maxIndex && i < maxIndex) {
+            return cntTrueReg(mat, i + 1, 0, mat.length);
+        }else if(j >= maxIndex && i >= maxIndex)
+            return 0;    
+
+        // if false, continue , else change the region to false and count 1 and repeat until we reach the end of the matrix
+        if(!mat[i][j]) {
+            return cntTrueReg(mat, i, j + 1, mat.length);
+        }else {
+            changeArray(mat, i, j, maxIndex);
+            return 1 + cntTrueReg(mat, i, j + 1, mat.length);
+        }    
+
+    }
+		
+    private static void changeArray(boolean[][] arr, int i, int j, int maxIndex) { // trace the true path and change it 
+        if(j >= maxIndex || i >= maxIndex || i < 0 || j < 0)
+            return;
+        
+        if(arr[i][j]) {
+
+            arr[i][j] = false;
+
+            if(j < maxIndex - 1 && arr[i][j + 1])
+                changeArray(arr, i, j + 1, maxIndex);
+            if(i < maxIndex - 1 && arr[i + 1][j])
+                changeArray(arr, i + 1, j, maxIndex);    
+            if(j >= 1 && arr[i][j - 1])
+                changeArray(arr, i, j - 1, maxIndex);
+            if(i >= 1 && arr[i - 1][j])
+                changeArray(arr, i - 1, j, maxIndex);
+
+        }
+    }
+				
+    
+    public class Range
+    {
+     private int _center, _radius;
+     public Range (int c, int r)
+     {
+     _center = c;
+     _radius = r;
+     }
+     public int getCenter() {
+     return _center;
+     }
+     public int getRadius() {
+     return _radius;
+     }
+    } 
+    
+    public static int isInRange (Range[] a, int num) {
+    	int left=0;
+    	int right=a.length-1;
+    	int mid;
+    	int leftBound;
+    	int rightBound;
+    	while (left <= right) {
+    		mid = (left+right)/2;
+    		 leftBound = a[mid].getCenter() - a[mid].getRadius();
+    		 rightBound = a[mid].getCenter() + a[mid].getRadius();
+    		 if (num >=leftBound && num<=rightBound)
+    		 return mid;
+    		 if (num < leftBound)
+    		 right = mid-1;
+    		 else
+    		 left = mid+1; 
+    	}
+    	return -1;	
+    }
+}
+
