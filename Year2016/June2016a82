@@ -1,0 +1,113 @@
+package Year2016;
+
+import java.awt.font.NumericShaper.Range;
+
+public class June2016a82 {
+
+	public static void main(String[] args)
+	{
+		
+		int [] a = {5, 6, 1, 2, 8};
+		System.out.println(where(a));
+	}
+	
+	 /*
+	  * Recursion 
+	  */
+	/**
+	 * 1 A .
+	 * 
+	 *The method goes through the whole array and with the help of the sum checker method each cell will move if the sum of the organs before it to the sum of the organs after it.
+	  If not / we have reached the end of the array, the method will return -1.
+	  If so, the method will return the position of the number.
+	 * @param vec - the Array
+	 * @return P - the sum of the indexs in the array up to its location is equal to the sum of the following indexs in the array.
+	 */
+	public int where (int [] vec)
+	{
+		return where(vec,0,1,vec.length-1);
+	}
+	
+	private int where (int [] vec, int left, int p, int right)
+	{
+		//right - the last index in the array.
+		//left -  first index in the array.
+		// p is 1 because everytime the method starts over , it will go inside the second if and will subtract 1 again so it will be all the index's in the array.
+		if (p > right)
+			return -1;
+		if (sum(vec,left,p-1) == sum(vec,p,right)) 
+			return p;
+		return where (vec,left,p+1,right);
+	}
+	
+	private int sum (int [] vec, int lo, int hi)
+	{
+		// returns the sum of low to high .
+		// no need to write it ,at the test it was gaven built in.
+	}
+	
+	/*
+	 * 1 B .
+	 */
+	
+	/**
+	 * Checks if from the first horizontal and checks all the next sub arrays is also horizontal until we check K horizontals.
+	 * @param vec - the array.
+	 * @param k - horizontal times
+	 * @return true if all sub arrays are horizontal .
+	 */
+	public static boolean isBalanced (int [] vec, int k)
+	{
+		return isBalanced(vec,0,vec.length-1,k);
+	}
+	
+	public static boolean isBalanced(int [] vec , int left, int right , int k)
+	{
+		if (k == 0) // if the array is empty
+			return true;
+		int p = where(vec,left,left+1,right);
+		
+		if (p == -1) // if the p is negative the Array is not horizontal.
+			return false;
+		
+		return isBalanced(vec,left,p-1,k-1) && isBalanced(vec,p,right,k-1);
+	}
+	
+	
+	/*
+	 * Complexity 
+	 */
+	/** The algorithm relies on the fact that between every 2 cells in the Range array there is such a regularity that any number can be reached between the connection of the maximum and the connection of the minimum.
+		And so you can sum all the numbers between them.
+	 * @param a - the array
+	 * @param x - the number we need to get to.
+	 * @return true of false If possible connect two cells in an array and get the sum of the number as the number x
+	 */
+	public static boolean isSum (Range a[], int x)
+	{
+		int low=0;
+		int high = a.length-1;
+		
+		while (low < high) 
+		{
+			if (x > a[low].getLargest() + a[high].getLargest())
+				low++;
+			else if (x < a[low].getSmallest() + a[high].getSmallest())
+				high--;
+			else return true;
+		}
+		
+		if (a[low].getLargest() == a[low].getSmallest())
+			return false; // duplicate numbers
+		
+		if (x < (a[low].getLargest() * 2)-1 && x > (a[low].getSmallest() * 2) -1)
+			return true; // single cell 
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+}
