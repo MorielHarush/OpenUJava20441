@@ -1,0 +1,80 @@
+package Year2012;
+
+public class May2012a92 {
+	
+	public static void main(String[] args)
+	{
+//		int[] arr = {5, 3, 1, 4};
+//		mirror(arr);
+//		int[] arr1 = {5, 3, 1, 4, 5};
+//		mirror(arr1);
+//		
+//	String str = "aaabbcccc";
+//	System.out.println(findBC(str));
+	String str1 = "aaacccccc";
+	System.out.println(firstB(str1));
+//	System.out.println(firstB(str));
+	}
+	
+
+	public static void mirror(int[] arr) {
+	    mirror(arr, 0, arr.length - 1,0);
+	}
+
+	private static void mirror(int[] arr, int start, int end,int index) {
+	    if (arr.length%2 == 1 || arr.length%2 == 2) { // if the array is not even , we cant mirror it.
+	    	System.out.println("-1");
+	    	return;
+	    }
+	    if (start > end) {
+	    	printArray(arr,index);
+	    	return;
+	    }
+	    // swap the elements at the start and end index's
+	    int temp = arr[start];
+	    arr[start] = arr[end];
+	    arr[end] = temp;
+	    // recursively check the remaining elements
+	    mirror(arr, start + 1, end - 1,index);
+	    // restore the original array
+	    arr[end] = arr[start];
+	    arr[start] = temp;
+	    // check the remaining elements without swapping the start and end index's
+	    mirror(arr, start + 1, end - 1,index);
+	}
+
+	private static void printArray(int[] arr, int index) {
+	    if (index == arr.length) {
+	        System.out.println();
+	        return;
+	    }
+	    System.out.print(arr[index] + " ");
+	    printArray(arr, index + 1);
+	}
+	
+	
+	public static int findBC (String s) {
+		int i = 0;
+		while(s.charAt(i) == 'a') {
+			i++;
+		}	
+		return i;
+	}
+	
+	public static int firstB (String s) {
+		int mid;
+		int low=0;
+		int high=findBC(s);
+		while(high > low+1) {
+			mid = (low+high)/2;
+			if ((s.charAt(mid) == 'b') || (s.charAt(mid) == 'c'))
+				high = mid;
+			else
+				low = mid;
+		}
+		if ((high == low+1) && (s.charAt(low) == 'a') && (s.charAt(high) == 'b'))
+			return high;
+		return -1;
+	}
+
+}
