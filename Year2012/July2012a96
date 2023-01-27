@@ -1,0 +1,135 @@
+package Year2012;
+
+public class July2012a96 {
+
+	 public static void main(String[] args)
+	    {
+//	        int[][] m = {{8,4,2,4,3},{6,3,8,4,5},{1,4,9,9,7},{2,1,7,6,5}};
+//	        System.out.println("Array:");
+//	        print(m);
+//	        System.out.println("Results:");
+//	        printPathWeights(m);
+		 int [] a = { 1,9,2,8,4,7,7,4,12 } ;
+//		 System.out.println("\narray before: ");
+//	        print1(a);
+//	        crossSort(a);
+//	        System.out.println("\narray after: ");
+//	        print1(a);
+//		 
+		 System.out.println(crossSearch(a, 9));
+	    }
+	 
+	    public static void print(int[][] m)
+	    {
+	        for(int i = 0; i < m.length; i++)
+	        for(int j = 0; j < m[i].length; j++)
+	        {
+	            System.out.print(m[i][j]);
+	            if(j == m[i].length-1)
+	            System.out.print("\n");
+	            else
+	            System.out.print(" ");
+	        }
+	    } 
+	    
+	    public static void print1(int[] arr)
+	    {
+	        for(int i =0; i < arr.length; i++)
+	        System.out.print(arr[i]+" ");
+	    }
+	    
+	public static void printPathWeights(int [][] m) {
+			printPathWeights(m,0,0,0);
+	}
+	
+	private static void printPathWeights(int [][] m,int i,int j,int sum) {
+		if(i >= m.length || j >= m[0].length || i < 0 || j < 0 || m[i][j] == -1)
+			return;
+		if(i == m.length-1 && j == m[0].length-1) 
+			System.out.println(sum+m[i][j]);
+		int k = m[i][j];
+		m[i][j] = -1;	
+		printPathWeights(m,i+1,j,sum+k);
+		printPathWeights(m,i-1,j,sum+k);
+		printPathWeights(m,i,j+1,sum+k);
+		printPathWeights(m,i,j-1,sum+k);
+		m[i][j] = k;
+	}
+	
+	//{ 1,9,2,8,4,7,7,4,12 } 
+	public static void crossSort(int[] arr) {
+        int[] temp = new int[arr.length];
+        int i = 0;
+        int j;
+        int x = 0;
+        if(arr.length%2 == 0)
+        	j = arr.length-1;
+        else
+        	j = arr.length-2;
+        
+        while(i < arr.length || j >= 0){ // exception
+            if(i < arr.length && j >= 0 ){ 
+                if(arr[i] < arr[j]){
+                    temp[x] = arr[i];
+                    x++;
+                    i = i+2;
+                }else{
+                    temp[x] = arr[j];
+                    x++;
+                    j = j-2;
+                }
+            }else if(i < arr.length){
+                temp[x] = arr[i];
+                x++;
+                i = i+2;
+            }else{
+                temp[x] = arr[j];
+                x++;
+                j = j-2;
+            }
+        }  
+        for(i = 0; i < arr.length; i++) // switchs all the original arr to the temp arr values.
+        {
+            arr[i] = temp[i];
+        }
+	}
+
+ // 9 	
+	public static int crossSearch(int [] arr, int x) {
+        int high;
+        if (arr.length%2 == 0)
+        	high = arr.length - 2;
+        	else
+        	high = arr.length - 1;
+        high = high/2;  // dividing by 2 as the final result would be the last even index in the array 
+        int low = 0;
+        int mid = 0;
+        while(low <= high) {
+            mid = low + (high-low)/2;
+            if(arr[mid*2] == x)
+                return mid*2;
+            if(arr[mid*2] < x)
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+        if (arr.length%2 == 0)
+        	low = arr.length - 2;
+        	else
+        	low = arr.length - 1;
+        low = low/2; 
+        high = 0;
+
+        while( low >= high) { // notice low >= high
+            mid = low + (high-low)/2;
+            if(arr[mid*2 + 1] == x)
+                return mid*2 + 1;
+            if(arr[mid*2 + 1] < x)
+                low = mid - 1;
+            else
+                high = mid + 1;
+        }
+        return -1;
+
+    }   
+}
