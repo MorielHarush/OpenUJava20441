@@ -1,0 +1,30 @@
+package Year2013;
+
+import java.util.Arrays;
+
+public class July2013a34 {
+	
+	
+	public static void main(String[] args) {
+		int a [] = {-3,0,2,4,11,12,15};
+		System.out.println(Arrays.toString(a));
+		System.out.println(fixedPoint(a));
+		
+	}
+	public static int fixedPoint (int [] a) {
+		int left = 0;
+		int right = a.length-1;
+		int mid;
+		while(left <= right) {
+			mid = (left+right)/2;
+			if (a[mid] == mid)
+				return mid;
+			if(a[mid] > mid)
+				right = mid -1;
+			if(a[mid] < mid)
+				left = mid+1;	
+		}
+		return -1;
+	}
+
+}
