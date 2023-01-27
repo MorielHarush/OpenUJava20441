@@ -1,0 +1,56 @@
+package Year2022;
+
+import java.util.Arrays;
+
+public class June2022a86 {
+	public static void main(String[] args)
+	{
+//		int [][] aa = 	{{12,22,23,54,11},
+//						{43,35,21,20,30},
+//						{34,23,43,22,30},
+//						{25,31,2,20,34},
+//						{10,22,10,11,10},
+//						{40,13,3,1,23}
+//						};
+//		System.out.println(maxPath(aa));
+		
+		int[] a = {35,17,13,252,4,128,7,3,81};
+		int[] expected  = {81,252,13,3,4,35,17,7,128};
+		sortmod(a,10);
+		System.out.println("expected: " + Arrays.toString(expected));
+		System.out.println("received: " + Arrays.toString(a));
+		}
+
+	public static int maxPath (int [][] mat)
+	{
+		return maxPath(mat,0,0,0);
+	}
+	
+	private static int maxPath (int [][] mat,int i , int j, int sum)
+	{
+		if (i >= mat.length || j >= mat[0].length || i < 0 || j < 0)
+			return Integer.MIN_VALUE;
+		if (i == mat.length-1 && j == mat[0].length-1)
+			return sum+mat[i][j];
+		int way1 = maxPath(mat,i+mat[i][j]/10,j+mat[i][j]%10 ,sum+mat[i][j]);
+		int way2 = maxPath(mat,i+mat[i][j]%10,j+mat[i][j]/10 ,sum+mat[i][j]);
+		return Math.max(way1,way2);
+	}
+	
+	
+	public static void sortmod(int[] a, int k){
+	int index = 0;
+	int temp;
+	for(int i = 0; i < k; i++){
+	 for (int j = index; j < a.length; j++) {
+	     if(a[j] % k == i){
+		     temp = a[index];
+			 a[index] = a[j];
+			 a[j] = temp;
+		     index++;
+	                } 
+	           } 
+	       } 
+	   }
+	
+} // main close 
