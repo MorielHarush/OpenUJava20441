@@ -1,0 +1,56 @@
+package Year2021;
+
+public class August2021a85 {
+	
+	public static void main(String[] args)
+	{
+		int bb[] []= {
+				{0, 15, 80, 90},
+				{-1, 0, 40, 50},
+			    {-1, -1, 0, 70},
+			    {-1, -1, -1, 0}
+						};
+		System.out.println(minPrice(bb));
+	}
+	public static int minPrice(int [][] mat) {
+		return minPrice(mat,0,0,0);
+		}
+	
+	private static int minPrice(int [][] mat, int i, int j,int sum) {
+		if(j == mat[0].length-1)
+			return mat[i][j]+sum;
+		if(i == j) // if we are in the same index's so you are at a 0 price station , so we will go 1 right 
+			return minPrice(mat,i,j+1,sum);
+		
+		int firstWay = minPrice(mat,i,j+1,sum);
+		int secondWay = minPrice(mat,j,j,sum+mat[i][j]);
+		return Math.min(firstWay, secondWay);
+	}
+	
+	public static boolean findAverage(int [] arr, double x) {
+		int i;
+		for(i =0; i<arr.length && arr[i] < x; i++);
+		int right = i;
+		int left = i;
+		double sum = arr[i];
+		double avg;
+		int len = arr.length;
+		while(left >= 0 && right < len) {
+			avg = sum/(right-left+1);
+			if(avg > x) {
+				left--;
+				if(left >= 0) // exception 
+					sum+= arr[left];
+			} else if(avg < x) {
+				right++;
+				if(right < len)  // exception 
+					sum += arr[right];
+			} else {
+				System.out.println(left+"---"+right);
+				return true;
+			}
+		}
+		return false;
+	}
+
+}
