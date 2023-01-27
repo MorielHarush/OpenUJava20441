@@ -1,0 +1,73 @@
+package Year2020;
+
+public class July202096 {
+
+	public static void main(String[] args)
+	{
+		int [][] aaa = {
+				{4, 5, 6, 7, 1},
+				{3, 5, 1, 7, 4},
+			    {4, 5, 6, 5, 8},
+			    {3, 4, 7, 7, 9},
+			    {6, 2, 2, 7, 6}
+						};
+		System.out.println(maxSumKnight(aaa));
+	}
+	public static int maxSumKnight(int[][]mat) {
+		return maxSumKnight(mat,0,0,0,mat[0][0]);
+	}
+	
+	private static int maxSumKnight(int[][]mat,int i, int j, int sum, int done)
+	{
+		if(i < 0 || j < 0 || i > mat.length-1 || j > mat[0].length-1)
+		{
+			return 0;
+		}
+		if(Math.abs(done - mat[i][j]) > 1) {
+			return 0;
+		}
+		if(i == mat.length-1 && j == mat.length-1) {
+			return sum+mat[i][j];
+		}
+		int z = mat[i][j];
+		mat[i][j] = -1;
+		int up1 = maxSumKnight(mat,i-1,j+2,sum+z,z);
+		int up2 = maxSumKnight(mat,i-2,j+1,sum+z,z);
+		int up3 = maxSumKnight(mat,i-2,j-1,sum+z,z);
+		int up4 = maxSumKnight(mat,i-1,j-2,sum+z,z);
+		int down1 = maxSumKnight(mat,i+1,j+2,sum+z,z);
+		int down2 = maxSumKnight(mat,i+2,j+1,sum+z,z);
+		int down3 = maxSumKnight(mat,i+2,j-1,sum+z,z);
+		int down4 = maxSumKnight(mat,i+1,j-2,sum+z,z);
+		mat[i][j] = z;
+		int maximumOne = Math.max(up1, up2);
+		int maximumTwo = Math.max(up3, up4);
+		int maximumThree = Math.max(down1, down2);
+		int maximumFour = Math.max(down3, down4);
+		int maximumFive = Math.max(maximumOne, maximumTwo);
+		int maximumSix = Math.max(maximumThree, maximumFour);
+		return Math.max(maximumFive, maximumSix);
+	}
+	
+	public static int minimalPositive (Range [] rangeA) {
+		int left=0;
+		int right=rangeA.length-1;
+		int mid;
+		while(left < right) {
+			mid = (left+right)/2;
+			if(rangeA[mid].getBig() <= 0) {
+					left = mid+1;
+			}else{
+				right = mid;
+			}
+		}
+		int smallNumber = rangeA[right].getSmall();
+		int bigNumber = rangeA[right].getBig();
+		if(bigNumber <= 0)
+			return -1;
+		if(smallNumber <= 0)
+			return 1;
+		return smallNumber;
+	}
+	
+}
