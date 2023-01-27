@@ -1,0 +1,52 @@
+package Year2018;
+
+import java.util.Arrays;
+
+public class March2018a91 {
+	
+	public static void main(String[] args)
+	{
+		int [] b = {2,8,3,4,7,1,3,2};
+		System.out.println(cheapestRoute(b));
+		int[] a = {35,17,13,252,4,128,7,3,81};
+		int[] expected  = {81,252,13,3,4,35,17,7,128};
+		sortmod(a,10);
+		System.out.println("expected: " + Arrays.toString(expected));
+		System.out.println("received: " + Arrays.toString(a));
+	}
+		
+
+	
+	public static int cheapestRoute(int [] stations) {
+		return cheapestRoute (stations,0, 0);
+	}
+
+	private static int cheapestRoute(int [] stations,int i, int sum) {
+		
+		if(stations.length == 1)
+			return stations[0];
+		if(i == stations.length-1)
+			return sum + stations[i];
+		if(i == stations.length-2)
+			return sum + stations[i] + stations[i+1];
+		int firstWay = cheapestRoute(stations,i+1,sum+stations[i]);
+		int secondWay = cheapestRoute(stations,i+2,sum+stations[i]);
+		return Math.min(firstWay, secondWay);
+	}
+	
+	public static void sortmod(int[] a, int k){
+	int index = 0;
+	int temp;
+	for(int i = 0; i < k; i++){
+	 for (int j = index; j < a.length; j++) {
+	     if(a[j] % k == i){
+		     temp = a[index];
+			 a[index] = a[j];
+			 a[j] = temp;
+		     index++;
+	                } 
+	           } 
+	       } 
+	   }
+}
+
