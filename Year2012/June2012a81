@@ -1,0 +1,24 @@
+package Year2012;
+
+public class June2012a81 {
+	public static void main(String[] args)
+	{
+		int [] a = {2,8,3,4,2,5};
+		int [] b = {2,4,6,2,3,4};
+		System.out.println(splitEqualSum(a));
+		System.out.println(splitEqualSum(b));
+	}
+	public static boolean splitEqualSum(int [] a) {
+		return splitEqualSum(a,0,0,0);
+	}
+	
+	private static boolean splitEqualSum(int [] a,int i,int sum1,int sum2) {
+		if (i == a.length) 
+			if (sum1 == sum2) 
+				return true;
+			else
+				return false;
+		return splitEqualSum(a,i+1,sum1+a[i],sum2) || splitEqualSum(a,i+1,sum1,sum2+a[i]);		
+	}
+}
+
