@@ -19,7 +19,7 @@ public class February2023a65 {
 		if(open < close || n < 0 ) {
 			return 0;
 		}
-		if(n == 0 && open == 3 && close == 3) {
+		if(n == 0 && open == close) {
 			System.out.println(str);
 			return 1;
 		}
