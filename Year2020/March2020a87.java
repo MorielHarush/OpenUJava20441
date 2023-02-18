@@ -54,36 +54,32 @@ public class March2020a87 {
 	 * @param k - Turns amount
 	 * @return - the amount of turns can be made in the same two dimensional array.
 	 */
-	public static int totalWays(int [][] mat, int k)
-	{
-		return totalWays(mat, k, 0, 1, false) + totalWays(mat, k, 1, 0, true);
+
+		public static int totalWays(int [][] mat,int k ) {
+		return totalWays(mat,k,0,0,0);
 	}
 	
-	private static int totalWays(int [][] mat, int k, int row, int col, boolean top)
-	{
-		if (row == mat.length-1 && col == mat[0].length-1) // last cell at the array.
-		{
-			if (k == 0) // if no turns , return only 1 way.
-				return 1;
-			else
-				return 0;
-		} // if close
-		if (row >= mat.length || col >= mat[0].length)
+	private static int totalWays(int [][] mat,int k ,int i,int j,int lastI) {
+		if(i < 0 || j < 0 || i >= mat.length || j >= mat[0].length || k < 0)
 			return 0;
-			if (top == true) // if we came from the top.
-			{
-				return totalWays (mat, k-1, row, col+1, false) + totalWays (mat, k, row+1, col, true);
-			} // going to right & Down 
-			else 
-			{
-				return totalWays (mat, k, row, col+1, false) + totalWays (mat, k-1, row+1, col, true);
-			} // going down & right 
-						
-	} // private class close 
+		if (i == mat.length-1 && j == mat.length-1 && k == 0)
+			return 1;
+		
+		if(i == 0 && j == 0)
+			return totalWays(mat,k,i+1,j,i);
+		if(lastI == i) {
+			return totalWays(mat,k,i+1,j,i) + totalWays(mat,k,i,j+1,i);
+		}else {
+			return totalWays(mat,k,i+1,j,i) + totalWays(mat,k-1,i,j+1,i);
+		}
+
+	}
+	
+	
+}
 	
 	
 	
-		} 
 
 	
 
