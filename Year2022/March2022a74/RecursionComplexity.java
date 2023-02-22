@@ -10,79 +10,93 @@ public class March2022b74 {
 				{'b','c','a','8','b','b'},
 				{'c','2','x','+','b','c'}};
 		System.out.println(lengthPath(mat1, "abc"));
-		int [] arr = {2,4,5,3,5,1};
+		System.out.println(maxPath(mat1, "abc"));
+//		int [] arr = {2,4,5,3,5,1};
 //		System.out.println(findDuplicate(arr));
-//		System.out.println(findDuplicatee(arr));
+//		System.out.println(findDuplicateee(arr));
 	}
 	
 				
 	
-	public static int lengthPath (char[][] mat, String pattern)
+	public static int lengthPath (char[][] mat, String pattern) {
+		return lengthPath(mat,pattern,0,0,0,0,1,0);
+	}
+    public static int lengthPath(char[][] mat, String pattern, int i, int j, int prevI,int privJ, int pathLength, int charIndex) {
+
+        int maxPath = pathLength;
+        char currentChar = pattern.charAt(charIndex);
+
+        if (j > 0 && (j-1 != privJ || i != prevI) && mat[j-1][i] == currentChar) {
+            int path = lengthPath(mat, pattern, i, j-1, i, j, pathLength+1, 0);
+            maxPath = Math.max(maxPath, path);
+        }
+        if (i > 0 && (j != privJ && i-1 != prevI) && mat[j][i-1] == currentChar) {
+            int path = lengthPath(mat, pattern, i-1, j, i, j, pathLength+1, 0);
+            maxPath = Math.max(maxPath, path);
+        }
+        if (i < mat.length && (j+1 != privJ || i != prevI) && mat[j+1][i] == currentChar) {
+            int path = lengthPath(mat, pattern, i, j+1, i, j, pathLength+1, 0);
+            maxPath = Math.max(maxPath, path);
+        }
+        if (j < mat[j].length && (j != privJ || i+1 != prevI) && mat[j][i+1] == currentChar) {
+            int path = lengthPath(mat, pattern, i+1, j, i, j, pathLength+1, 0);
+            maxPath = Math.max(maxPath, path);
+        }
+
+        if (charIndex < pattern.length()-1) {
+            int path = lengthPath(mat, pattern, i, j, prevI, privJ, pathLength,charIndex+1);
+            maxPath = Math.max(maxPath, path);
+        }
+        return maxPath;
+    }
+    
+    
+
+    public static int maxPath(char[][] mat, String pattern) {
+        return maxPath(mat, pattern, 0, 0, 0, 0);
+    }
+
+    private static int maxPath(char[][] mat, String pattern, int xIndex, int yIndex, int charIndex, int sum) {
+
+        int pathSum = sum;
+        char currentChar = pattern.charAt(charIndex);
+        char element = mat[yIndex][xIndex];
+
+        if (currentChar == element) {
+            int path = lengthPath(mat, pattern);
+            pathSum = Math.max(pathSum, path);
+        }
+        if (charIndex < pattern.length() - 1) {
+            int path = maxPath(mat, pattern, xIndex, yIndex, charIndex + 1, sum);
+            pathSum = Math.max(pathSum, path);
+        } else {
+            if (xIndex < mat.length) {
+                int path = maxPath(mat, pattern, xIndex + 1, yIndex, 0, sum);
+                pathSum = Math.max(pathSum, path);
+            }
+            if (yIndex < mat[xIndex].length) {
+                int path = maxPath(mat, pattern, 0, yIndex + 1, 0, sum);
+                pathSum = Math.max(pathSum, path);
+            }
+        }
+
+        return pathSum;
+    }
+
+	
+	public static int findDuplicate(int[] a)
 	{
-		return lengthPath(mat,pattern,0,0,pattern,0,0);
-	}
-	
-	private static int lengthPath(char [][]mat, String pattern,int i, int j ,String original,int sum,int max1) {
 		
-		if(i < 0 || j < 0 || i >= mat.length || j >= mat[0].length || mat[i][j] == '#')
-			return 0;
-		
-		if(pattern.length() == 0) {
-			pattern = original;
-			max1 = sum;
-			sum = 1;
-			i = 0;
-			j = 0;
+		for (int i = 0; i < a.length; i++){
+			if (a[0] == a[a[0]]){
+				return a[0];
+			}
+			// swap(0, a[0]);
+			int temp = a[0];
+			a[0] = a[a[0]];
+			a[temp] = temp;
 		}
-			
-		if(mat[i][j] == pattern.charAt(0)) {
-			pattern = original;
-			sum++;
-			}else {
-				lengthPath(mat, pattern.substring(1), i,j,original,sum,max1);
-			}			
-
-			char temp = mat[i][j];
-			mat[i][j] = '#';
-			int way1 = lengthPath(mat, pattern, i+1, j,original, sum,max1+1);
-			int way2 = lengthPath(mat, pattern, i, j+1,original, sum,max1+1);
-			int way3 = lengthPath(mat, pattern, i-1, j,original, sum,max1+1);
-			int way4 = lengthPath(mat, pattern, i, j-1,original, sum,max1+1);
-			
-			mat[i][j] = temp;
-			return way1 + way2 + way3 + way4;
+		return 0;
 	}
-
-	
-	
-	// Option A 
-	public static int findDuplicate(int[] a) {
-//		quickSort(a,0,a.length-1);
-		int i;
-		for(i=1; i<a.length; i++) {
-			if(a[i] == a[i+1])
-				return a[i];
-		}	
-		return -1;
-	}
-	
-	// Option B 
-	public static int findDuplicatee(int[] a) {
-	    int n = a.length - 1;
-	    int sum = (n * (n + 1)) / 2;
-	    int arraySum = 0;
-	    
-	    for (int i : a) {
-	        arraySum += i;
-	    }
-	    
-	    int duplicate = arraySum - sum;
-	    if (duplicate == 0) {
-	        return -1;
-	    } else {
-	        return duplicate;
-	    }
-	}
-	
-	}
+}
 
