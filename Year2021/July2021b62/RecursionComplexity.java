@@ -32,8 +32,43 @@ public class July2021b62 {
 			|| equalSplit(arr,sum1,sum2+arr[i],cnt1,cnt2+1,left-1,i+1);
 	}
 	
+	//option1
 	
 	public static boolean search (int [][]mat,int num)
+	{
+		int n = mat.length;
+		int i = 0;
+		int j = 0;
+		while(n > 1) {
+			if(num <= mat[(n/2)-1+i][j]){ // [1][0] // Left Top Quarter // 6 
+				System.out.println(mat[(n/2)-1+i][j]);
+				i = i;
+				j = j;
+			}else if(num <= mat[(n/2) -1 + i][(n/2) + j]){ // [1][2] // Right Top Quarter  // 15 
+//				System.out.println(mat[(n/2) -1 + i][(n/2) + j]); 
+				j += n/2;	
+			}else if(num <= mat[(n-1) + i][(n/2) +j]) { // [1][3] // Right Low Quarter // 11
+//				System.out.println(mat[(n-1) + i][(n/2) +j]);
+					i += n/2;
+					j += n/2;
+			}else if(num <= mat[(n-1)+i][j]){ // [3][1] // Left Low Quarter // 60
+//				System.out.println(mat[(n-1)+i][j]);
+				i += n/2;
+			}
+			if(mat[i][j] == num) {
+				System.out.println("row= " + i);
+				System.out.println("col= " + j);
+				return true;
+			}else {
+				n = n/2;
+			}
+		}
+		return false;
+	}
+	
+	
+	//option2 
+	public static boolean searchh (int [][]mat,int num)
 	{
 		int len = mat.length;
 		int row = len-1;
